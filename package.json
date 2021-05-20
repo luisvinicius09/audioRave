@@ -1,7 +1,7 @@
 {
-  "name": "@erickwendel/clubhouse-app",
+  "name": "Audio Rave",
   "version": "1.0.0",
-  "description": "",
+  "description": "Audio Rave is an social media app where users can communicate in voice chat rooms.",
   "main": "index.js",
   "scripts": {
     "start": "npx http-server .",
@@ -11,6 +11,6 @@
     "http-server": "^0.12.3"
   },
   "keywords": [],
-  "author": "erickwendel",
+  "author": "luisvinicius09",
   "license": "ISC"
 }
