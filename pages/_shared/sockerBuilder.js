@@ -1,18 +1,34 @@
 import { constants } from './constants.js';
 
 export default class SocketBuilder {
-  constructor({ socketUrl}) {
-    this.socketUrl = socketUrl;
+  constructor({ socketUrl, namespace }) {
+    this.socketUrl = `${socketUrl}/${namespace}`;
+
+    this.onUserConnected = () => {};
+    this.onUserDisconnected = () => {};
   }
+
+  setOnUserConnected(fn) {
+    this.onUserConnected = fn;
+
+    return this;
+  }
+
+  setOnUserDisconnected(fn) {
+    this.onUserDisconnected = fn;
+
+    return this;
+  }
+
   build() {
     const socket = globalThis.io.connect(this.socketUrl, {
       withCreditials: false
     });
 
-    socket.on('connection', () => console.log('connected'));
+    socket.on('connection', () => console.log('connected!'));
 
-    socket.on(constants.events.USER_CONNECTED, () => console.log());
-    socket.on(constants.events.USER_DISCONNECTED, () => console.log());
+    socket.on(constants.events.USER_CONNECTED, () => this.onUserConnected);
+    socket.on(constants.events.USER_DISCONNECTED, () => this.onUserDisconnected);
 
     return socket;
   }
