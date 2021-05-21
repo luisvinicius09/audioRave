@@ -26,9 +26,11 @@ export default class SocketServer {
 
     const room = this.#io.of('/room');
     room.on('connection', (socket) => {
+      socket.emit('userConnection', 'socket id connected', + socket.id);
+
       socket.on('joinRoom', (data) => {
         console.log('data received', data);
-        
+
       })
     })
 
