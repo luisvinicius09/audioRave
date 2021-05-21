@@ -1,6 +1,6 @@
 import http from 'http';
 import { Server } from 'socket.io';
-import { constants } from './constants';
+import { constants } from './constants.js';
 
 export default class SocketServer {
   #io

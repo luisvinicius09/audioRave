@@ -8,6 +8,10 @@ export default class RoomsController {
     console.log('connection stablished with', id);
   }
 
+  joinRoom(socket, data) {
+    console.log('data received', data);
+  }
+
   getEvents() {
     const functions = Reflect.ownKeys(RoomsController.prototype)
       .filter((fn) => fn !== 'constructor')
@@ -21,6 +25,6 @@ export default class RoomsController {
         ['disconnect', this.disconnect],
       ]
     */
-   
+
   }
 }

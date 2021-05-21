@@ -13,15 +13,6 @@ const namespaces = {
   room: { controller: roomsController, eventEmitter: new Event() }
 }
 
-// namespaces.room.eventEmitter.on(
-//   'userConnected',
-//   namespaces.room.controller.onNewConnection.bind(namespaces.room.controller)
-// );
-
-// namespaces.room.eventEmitter.emit('userConnected', { id: '001' });
-// namespaces.room.eventEmitter.emit('userConnected', { id: '002' });
-// namespaces.room.eventEmitter.emit('userConnected', { id: '003' });
-
 const routeConfig = Object.entries(namespaces)
   .map(([namespace, { controller, eventEmitter }]) => {
     const controllerEvents = controller.getEvents();
@@ -34,5 +25,7 @@ const routeConfig = Object.entries(namespaces)
       [namespace]: { events: controllerEvents, eventEmitter }
     }
 });
+
+socketServer.attachEvents({ routeConfig });
 
 console.log('socket server is running at', server.address().port);
