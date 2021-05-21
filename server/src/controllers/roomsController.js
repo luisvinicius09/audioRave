@@ -1,3 +1,5 @@
+import { constants } from '../util/constants.js';
+
 export default class RoomsController {
   constructor() {
     
@@ -10,6 +12,7 @@ export default class RoomsController {
 
   joinRoom(socket, data) {
     console.log('data received', data);
+    socket.emit(constants.event.USER_CONNECTED, data)
   }
 
   getEvents() {
