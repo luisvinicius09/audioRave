@@ -1,5 +1,5 @@
 {
-  "name": "Audio Rave",
+  "name": "audiorave",
   "version": "1.0.0",
   "description": "Audio Rave is an social media app where users can communicate in voice chat rooms.",
   "main": "index.js",
