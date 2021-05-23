@@ -7,5 +7,4 @@ export default class Attendee {
     this.roomId = roomId;
     this.peerId = peerId;
   }
-
 }

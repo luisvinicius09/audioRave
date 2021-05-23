@@ -15,7 +15,7 @@ export default class RoomsController {
     this.#updateGlobalUserData(id);
   }
 
-  joinRoom(socket, { user, room}) {
+  joinRoom(socket, { user, room }) {
 
     const userId = user.id = socket.id;
     const roomId = room.id;
@@ -24,7 +24,9 @@ export default class RoomsController {
 
     console.log({ updatedUserData });
 
-    socket.emit(constants.event.USER_CONNECTED, data);
+    const updatedRoom = this.#joinUserRoom(socket, updatedUserData, room);
+    console.log(updatedRoom);
+    socket.emit(constants.event.USER_CONNECTED, updatedRoom);
   }
 
   #joinUserRoom(socket, user, room) {
@@ -51,13 +53,13 @@ export default class RoomsController {
     this.rooms.set(roomId, updatedRoom);
     socket.join(roomId);
 
-    return this.room.get(roomId);
+    return this.rooms.get(roomId);
   }
 
   #mapRoom(room) {
-    const users = [...room.users.value()];
+    const users = [...room.users.values()];
     const speakersCount = users.filter((user) => user.isSpeaker).length;
-    const featuredAttendees = user.slice(0, 3);
+    const featuredAttendees = users.slice(0, 3);
     const mappedRoom = new Room({
       ...room,
       featuredAttendees,
