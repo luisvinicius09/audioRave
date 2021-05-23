@@ -1,4 +1,5 @@
 import Attendee from '../entities/attendee.js';
+import Room from '../entities/room.js';
 import { constants } from '../util/constants.js';
 
 export default class RoomsController {
@@ -33,8 +34,15 @@ export default class RoomsController {
     const currentUser = new Attendee({
       ...user,
       roomId
-    })
+    });
+
+    // define who is the room's owner
+    const [owner, users] = existingRoom ?
+      [currentRoom.owner, currentRoom.users] :
+      [currentUser, new Set()]
   }
+
+  #mapRoom
 
   #updateGlobalUserData(userId, userData = {}, roomId = '') {
     const user = this.#users.get(userId) ?? {};
