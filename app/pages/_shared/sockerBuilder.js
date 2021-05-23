@@ -22,13 +22,13 @@ export default class SocketBuilder {
 
   build() {
     const socket = globalThis.io.connect(this.socketUrl, {
-      withCreditials: false
+      withCredentials: false
     });
 
     socket.on('connection', () => console.log('connected!'));
 
-    socket.on(constants.events.USER_CONNECTED, () => this.onUserConnected);
-    socket.on(constants.events.USER_DISCONNECTED, () => this.onUserDisconnected);
+    socket.on(constants.events.USER_CONNECTED, this.onUserConnected);
+    socket.on(constants.events.USER_DISCONNECTED, this.onUserDisconnected);
 
     return socket;
   }
