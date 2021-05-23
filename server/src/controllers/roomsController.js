@@ -39,10 +39,34 @@ export default class RoomsController {
     // define who is the room's owner
     const [owner, users] = existingRoom ?
       [currentRoom.owner, currentRoom.users] :
-      [currentUser, new Set()]
+      [currentUser, new Set()];
+
+    const updatedRoom = this.#mapRoom({
+      ...currentRoom,
+      ...room,
+      owner,
+      users: new Set([...users, [currentUser]])
+    });
+
+    this.rooms.set(roomId, updatedRoom);
+    socket.join(roomId);
+
+    return this.room.get(roomId);
   }
 
-  #mapRoom
+  #mapRoom(room) {
+    const users = [...room.users.value()];
+    const speakersCount = users.filter((user) => user.isSpeaker).length;
+    const featuredAttendees = user.slice(0, 3);
+    const mappedRoom = new Room({
+      ...room,
+      featuredAttendees,
+      speakersCount,
+      attendeesCount: room.users.size
+    });
+
+    return mappedRoom;
+  }
 
   #updateGlobalUserData(userId, userData = {}, roomId = '') {
     const user = this.#users.get(userId) ?? {};
